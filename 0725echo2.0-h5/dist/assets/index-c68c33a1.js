@@ -1,0 +1,1 @@
+import{aW as a,d as o}from"./index-e83e29a3.js";const i=a=>o("/api/ownCoin/list?status=".concat(a)),n=o=>a("/api/ownCoinOrder/list?".concat(o)),s=o=>a("/api/ownCoin/getDetail/".concat(o)),t=a=>o("/api/ownCoin/subscribeCoins",a),c=a=>o("/api/ownCoinOrder/placing",a);export{s as a,n as g,i as o,c as p,t as s};
