@@ -88,7 +88,7 @@ const tabList = computed(() => {
   return list.sort((a, b) => a.sort - b.sort)
 })
 
-console.log(tabList.value)
+// console.log(tabList.value)
 
 const tabActive = ref(tabList.value[0]?.name || '')
 
