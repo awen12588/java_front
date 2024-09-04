@@ -130,7 +130,7 @@ const showNotice = ref(false)
 const showNoticeContent = ref({})
 const getOpenPopupContent = async () => {
   const res = await publiceNotice('POP_UPS_NOTICE', 'DEFI_POP_UPS_NOTICE')
-  if ((res.code = '200')) {
+  if ((res.code == '200')) {
     if (res.data.length) {
       showNotice.value = true
       showNoticeContent.value = res.data[0]

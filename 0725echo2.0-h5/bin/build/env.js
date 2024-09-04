@@ -6,11 +6,11 @@ const envList = {
     VITE_APP_PLEATFORM_THEME: 'light',
 
     // API
-    VITE_APP_BASE_API: 'https://adminde1.batbid.net',
+    VITE_APP_BASE_API: 'https://api.likevotes.com',
     // STATIC API
-    VITE_APP_STATIC_API: 'https://adminde1.batbid.net',
+    VITE_APP_STATIC_API: 'https://api.likevotes.com',
     // WSS
-    VITE_APP_BASE_WSS: 'wss://adminde1.batbid.net',
+    VITE_APP_BASE_WSS: 'wss://api.likevotes.com',
 
     // 完整标题
     VITE_APP_META_TITLE: 'BatBid',

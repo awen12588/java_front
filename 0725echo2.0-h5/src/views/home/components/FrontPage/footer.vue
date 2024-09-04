@@ -7,7 +7,7 @@
       <h1 :class="showTab===1?'active title':'title'" @click="handelShowTab(1)">外汇币种<i></i></h1>
     </div> -->
     <div class="headerChoose">
-      <van-tabs
+      <!-- <van-tabs
         v-model:active="showTab"
         line-width="20"
         line-height="2"
@@ -22,7 +22,7 @@
             <div v-if="item.show">{{ item.name }}</div>
           </template>
         </van-tab>
-      </van-tabs>
+      </van-tabs> -->
     </div>
     <div class="main">
       <!-- 名称 最新价 涨跌幅 -->

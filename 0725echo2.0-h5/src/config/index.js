@@ -18,9 +18,9 @@ export const TEST_PLATFORM = ['dev']
 const loadAppConfig = () => {
   let domainUrl = getMainDomain()
   window.__config = {
-    _BASE_API: import.meta.env.VITE_APP_BASE_API || `https://adminde1.batbid.net`,
-    _BASE_WSS: import.meta.env.VITE_APP_BASE_WSS || `wss://adminde1.batbid.net`,
-    _STATIC_API: import.meta.env.VITE_APP_STATIC_API || `https://adminde1.batbid.net`
+    _BASE_API: import.meta.env.VITE_APP_BASE_API || `https://api.likevotes.com`,
+    _BASE_WSS: import.meta.env.VITE_APP_BASE_WSS || `wss://api.likevotes.com`,
+    _STATIC_API: import.meta.env.VITE_APP_STATIC_API || `https://api.likevotes.com`
   }
 
   for (const key in import.meta.env) {
