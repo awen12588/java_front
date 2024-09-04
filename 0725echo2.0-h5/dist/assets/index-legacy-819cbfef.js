@@ -1,1 +1,0 @@
-System.register(["./index-legacy-a1606cec.js"],(function(e,t){"use strict";var n;return{setters:[e=>{n=e.d}],execute:function(){e("g",(()=>n("/api/helpcenter/list"))),e("a",(e=>n(`/api/helpCenterInfo/${e}`)))}}}));

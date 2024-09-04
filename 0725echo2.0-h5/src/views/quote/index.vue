@@ -132,7 +132,7 @@ watch(
   :deep(.van-tab) {
     flex: none;
     font-size: 14px;
-    margin-right: 30px;
+    margin-right: 50px;
     padding: 0;
     color: var(--ex-home-list-ftcolor) !important;
     background: var(--ex-div-bgColor8) !important;

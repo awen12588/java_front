@@ -305,7 +305,7 @@ const handelShowTab = (item) => {
 </script>
 <style lang="scss" scoped>
 .footer {
-  padding-bottom: 120px;
+  padding-bottom: 80px;
   // .tab_title {
   //   display: flex;
   //   background-color: #fbfbfb;
