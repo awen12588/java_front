@@ -381,6 +381,18 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
+            <el-form-item label="所属上级" prop="userType">
+              <el-select v-model="form.userType" placeholder="请选择上级">
+                <el-option
+                  v-for="dict in dict.type.sys_user_type"
+                  :key="dict.value"
+                  :label="dict.label"
+                  :value="dict.value"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <!-- <el-col :span="12">
             <el-form-item label="用户昵称" prop="nickName">
               <el-input
                 v-model="form.nickName"
@@ -388,7 +400,7 @@
                 maxlength="30"
               />
             </el-form-item>
-          </el-col>
+          </el-col> -->
           <!-- <el-col :span="12">
             <el-form-item label="归属部门" prop="deptId">
               <treeselect
@@ -400,7 +412,7 @@
             </el-form-item>
           </el-col> -->
         </el-row>
-        <el-row>
+        <!-- <el-row>
           <el-col :span="12">
             <el-form-item label="手机号码" prop="phonenumber">
               <el-input
@@ -419,7 +431,7 @@
               />
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row> -->
         <el-row>
           <el-col :span="12">
             <el-form-item
@@ -451,7 +463,7 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="用户性别">
               <el-select v-model="form.sex" placeholder="请选择性别">
                 <el-option
@@ -462,7 +474,7 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-          </el-col>
+          </el-col> -->
           <el-col :span="12">
             <el-form-item label="状态">
               <el-radio-group v-model="form.status">
@@ -476,7 +488,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
+       <el-row>
           <!-- <el-col :span="12">
             <el-form-item label="岗位">
               <el-select
@@ -494,7 +506,7 @@
               </el-select>
             </el-form-item>
           </el-col> -->
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="角色" prop="roleIds">
               <el-select
                 :default-first-option="false"
@@ -511,9 +523,9 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-          </el-col>
+          </el-col> -->
         </el-row>
-        <el-row>
+        <!-- <el-row>
           <el-col :span="12">
             <el-form-item label="类型" prop="userType">
               <el-select v-model="form.userType" placeholder="请选择类型">
@@ -526,7 +538,7 @@
               </el-select>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row> -->
         <el-row>
           <el-col :span="24">
             <el-form-item label="备注">
