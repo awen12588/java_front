@@ -206,7 +206,7 @@
             <div v-else>无地址</div>
           </template>
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           label="地址类型"
           align="center"
           prop="walletType"
@@ -218,7 +218,7 @@
               :value="scope.row.walletType"
             />
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column
           label="是否冻结"
           align="center"
@@ -547,7 +547,7 @@
         <el-form-item label="密码" prop="loginPassword">
           <el-input v-model="addForm.loginPassword" placeholder="请输入密码" />
         </el-form-item>
-        <el-form-item label="地址类型" prop="walletType">
+        <!-- <el-form-item label="地址类型" prop="walletType">
           <el-select v-model="addForm.walletType" placeholder="请选择地址类型">
             <el-option
               v-for="dict in dict.type.user_address_type"
@@ -556,7 +556,7 @@
               :value="dict.value"
             ></el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="用户类型" prop="isTest">
           <el-select v-model="addForm.isTest" placeholder="请选择状态">
             <el-option

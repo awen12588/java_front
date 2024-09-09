@@ -1,6 +1,16 @@
 <template>
   <!-- 登录 -->
   <div class="box" v-if="props.type == 0">
+	  <div class="protocol">
+	    <svg-load v-if="!isCheck" name="gou" class="protocolImg" @click="toSwitch"></svg-load>
+	    <svg-load v-if="isCheck" name="gouH" class="protocolImg" @click="toSwitch"></svg-load>
+	    <!-- 我已阅读并同意 -->
+	    <div>{{ _t18('read_and_confirm') }}</div>
+	    <!-- 理财协议 -->
+	    <div class="hightName" @click="$router.push('/privacyPolicy')">
+	      {{ _t18('register_private') }}
+	    </div>
+	  </div>
     <div class="btnBox" @click="toLogin">
       <ButtonBar :btnValue="_t18('login')" />
     </div>
@@ -76,12 +86,14 @@ const refersh = () => {
   // 刷新验证码
   emit('refersh')
 }
+const isCheck = ref(true) // 选择服务协议
 const mainStore = useMainStore()
 /**
  * 登录
  */
 const toLogin = () => {
   let formData = {}
+  if (!isCheck.value) return _toast('please_agree_login')
   formData.code = props.formDataToLogin.code //验证码
   if (props.formDataToLogin.type == 1) {
     // 账号登录
@@ -135,6 +147,10 @@ const toLogin = () => {
   // } else {
   //   _toast(msg)
   // }
+}
+// 勾选协议
+const toSwitch = () => {
+  isCheck.value = !isCheck.value
 }
 // 登录接口
 const loginSubmit = (params) => {
@@ -340,8 +356,26 @@ const forgerPasswordSubmit = (params) => {
 }
 .box {
   padding: 0 15px 50px;
+  .protocol {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin: auto;
+    padding: 30px 0 0;
+    font-size: 14px;
+    text-align: center;
+    .protocolImg {
+      width: 18px;
+      height: 18px;
+      margin-right: 5px;
+    }
+    .hightName {
+      color: var(--ex-font-color2);
+      text-decoration: underline;
+    }
+  }
   .btnBox {
-    margin-top: 50px;
+    margin-top: 10px;
   }
   .account {
     padding: 50px 0 50px;

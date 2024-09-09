@@ -38,6 +38,7 @@ const advancedAuth = ref(userInfo.value.detail?.auditStatusAdvanced)
 const title = ref(_t18('advanced_IdCard'))
 const type = ref('1')
 const show = ref(false)
+const isCheck = ref(true) // 选择服务协议
 const actions = [
   { name: _t18('advanced_IdCard'), type: 1 }, //身份证
   { name: _t18('advanced_paper'), type: 2 }, //护照
@@ -120,6 +121,10 @@ const afterRead3 = (file) => {
   })
 }
 
+// 勾选协议
+const toSwitch = () => {
+  isCheck.value = !isCheck.value
+}
 /**
  * 提交认证信息
  * 审核状态 0未申请 1通过 3审核中 2拒绝
@@ -130,6 +135,7 @@ const submit = () => {
     _toast('advanced_please_name')
     return
   }
+  
   if (!REALNAME.includes(__config._APP_ENV) && formData.number == '') {
     // showToast('请填写证件号码')
     _toast('advanced_please_number')
@@ -150,6 +156,10 @@ const submit = () => {
     _toast('please_loan_hand')
     return
   }
+  if (!isCheck.value){
+	  _toast('please_agree_login')
+	  return 
+  } 
   const file1 = fileList1.value[0] || {}
   let filePath1 = file1.res
   const file2 = fileList2.value[0] || {}
@@ -194,7 +204,7 @@ const init = () => {
   } else if (['das'].includes(__config._APP_ENV)) {
     nationName.value = 'nation_Singapore'
   } else {
-    nationName.value = 'nation_Japan'
+    nationName.value = 'nation_Australia'
   }
 }
 
@@ -294,6 +304,17 @@ onMounted(() => {
         </van-uploader>
       </div>
     </div>
+	<div class="protocol">
+	  <svg-load v-if="!isCheck" name="gou" class="protocolImg" @click="toSwitch"></svg-load>
+	  <svg-load v-if="isCheck" name="gouH" class="protocolImg" @click="toSwitch"></svg-load>
+	  <!-- 我已阅读并同意 -->
+	  <div>
+	  {{ _t18('advanced_certification_agreement') }}
+	  <span class="hightName" @click="$router.push('/privacyPolicy')">{{ _t18('advanced_certification_rights') }}</span>
+	  <span>{{ _t18('advanced_certification_agreement2') }}</span>
+	  </div>
+	 
+	</div>
     <div class="btnBox" @click="submit">
       <ButtonBar :btnValue="_t18('advanced_submit')" />
     </div>
@@ -479,13 +500,32 @@ onMounted(() => {
 
   .btnBox {
     width: 100%;
-    margin: 50px 0;
+    margin: 10px 0 50px 0;
   }
 }
 
 .success {
   margin: 100px 0;
 }
+
+  .protocol {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin: auto;
+    padding: 30px 0 0;
+    font-size: 14px;
+    text-align: center;
+    .protocolImg {
+      width: 18px;
+      height: 18px;
+      margin-right: 5px;
+    }
+    .hightName {
+      color: var(--ex-font-color2);
+      text-decoration: underline;
+    }
+  }
 
 :deep(.van-action-sheet__content) {
   button {

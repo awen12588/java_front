@@ -45,7 +45,7 @@
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
-          <el-form-item label="手机号码" prop="phonenumber">
+          <!-- <el-form-item label="手机号码" prop="phonenumber">
             <el-input
               v-model="queryParams.phonenumber"
               placeholder="请输入手机号码"
@@ -53,7 +53,7 @@
               style="width: 240px"
               @keyup.enter.native="handleQuery"
             />
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="状态" prop="status">
             <el-select
               v-model="queryParams.status"
@@ -185,7 +185,7 @@
             v-if="columns[1].visible"
             :show-overflow-tooltip="true"
           />
-          <el-table-column
+          <!-- <el-table-column
             label="用户昵称"
             align="center"
             key="nickName"
@@ -208,7 +208,7 @@
             prop="phonenumber"
             v-if="columns[4].visible"
             width="120"
-          />
+          /> -->
           <el-table-column
             label="状态"
             align="center"
@@ -224,7 +224,31 @@
               ></el-switch>
             </template>
           </el-table-column>
-          <el-table-column label="GoogleKey" width="160" align="center">
+          <el-table-column
+            label="邀请码"
+            align="center"
+            key="inviteCode"
+            prop="inviteCode"
+            v-if="columns[3].visible"
+            :show-overflow-tooltip="true"
+          />
+          <el-table-column
+            label="注册链接"
+            align="center"
+            key="deptName"
+            prop="dept.deptName"
+            v-if="columns[4].visible"
+            :show-overflow-tooltip="true"
+          />
+          <el-table-column
+            label="所属上级"
+            align="center"
+            key="phonenumber"
+            prop="phonenumber"
+            v-if="columns[5].visible"
+            width="120"
+          />
+          <!-- <el-table-column label="GoogleKey" width="160" align="center">
             <template slot-scope="scope">
               <el-button
                 plain
@@ -241,7 +265,7 @@
                 >更新</el-button
               >
             </template>
-          </el-table-column>
+          </el-table-column> -->
           <el-table-column
             label="创建时间"
             align="center"
@@ -271,7 +295,7 @@
               <span v-else-if="scope.row.userType == '2'">代理</span> -->
             </template>
           </el-table-column>
-          <el-table-column
+          <!-- <el-table-column
             label="绑定代理"
             align="center"
             key="scope.row.userType"
@@ -289,7 +313,7 @@
                 v-hasPermi="['system:user:add']"
                 >添加</el-button
               >
-              <!-- <span @click="bindOpen == true">代理</span> -->
+              <span @click="bindOpen == true">代理</span>
             </template>
           </el-table-column>
           <el-table-column
@@ -312,7 +336,7 @@
                 >添加</el-button
               >
             </template>
-          </el-table-column>
+          </el-table-column> -->
           <el-table-column
             label="操作"
             align="center"
@@ -322,7 +346,7 @@
           >
             <template slot-scope="scope">
               <div
-                v-if="scope.row.userId !== 1 && scope.row.userId !== 2"
+                v-if="scope.row.userId !== 1"
                 style="height: 35px"
               >
                 <el-button
@@ -381,8 +405,8 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="所属上级" prop="userType">
-              <el-select v-model="form.userType" placeholder="请选择上级">
+            <el-form-item label="所属上级" prop="parentId">
+              <el-select v-model="form.parentId" placeholder="请选择上级">
                 <el-option
                   v-for="dict in dict.type.sys_user_type"
                   :key="dict.value"
@@ -882,9 +906,9 @@ export default {
             trigger: "blur",
           },
         ],
-        nickName: [
-          { required: true, message: "用户昵称不能为空", trigger: "blur" },
-        ],
+        // nickName: [
+        //   { required: true, message: "用户昵称不能为空", trigger: "blur" },
+        // ],
         password: [
           { required: true, message: "用户密码不能为空", trigger: "blur" },
           {
@@ -894,25 +918,25 @@ export default {
             trigger: "blur",
           },
         ],
-        email: [
-          {
-            type: "email",
-            message: "请输入正确的邮箱地址",
-            trigger: ["blur", "change"],
-          },
-        ],
-        phonenumber: [
-          {
-            pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
-            message: "请输入正确的手机号码",
-            trigger: "blur",
-          },
-        ],
-        roleIds: [
-          { required: true, message: "用户角色不能为空", trigger: "blur" },
-        ],
-        userType: [
-          { required: true, message: "用户类型不能为空", trigger: "blur" },
+        // email: [
+        //   {
+        //     type: "email",
+        //     message: "请输入正确的邮箱地址",
+        //     trigger: ["blur", "change"],
+        //   },
+        // ],
+        // phonenumber: [
+        //   {
+        //     pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
+        //     message: "请输入正确的手机号码",
+        //     trigger: "blur",
+        //   },
+        // ],
+        // roleIds: [
+        //   { required: true, message: "用户角色不能为空", trigger: "blur" },
+        // ],
+        parentId: [
+          { required: true, message: "上级代理不能为空", trigger: "blur" },
         ],
       },
       pageNum: 1,
@@ -1113,6 +1137,7 @@ export default {
         phonenumber: null,
         email: null,
         sex: null,
+        parentId: null,
         userType: null,
         status: "0",
         remark: null,

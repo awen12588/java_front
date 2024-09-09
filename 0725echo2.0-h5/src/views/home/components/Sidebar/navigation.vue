@@ -107,9 +107,9 @@ const listArray = computed(() => {
   return data
 })
 onMounted(() => {
-  getWhitePaper()
+  // getWhitePaper()
 })
-
+console.log(userInfo)
 /**
  * 获取白皮书URL
  */
@@ -130,28 +130,29 @@ const toView = (item) => {
     window.open(paperUrl.value)
   } else if (item.jumpType == 'path') {
     // _toView(item.jumpUrl)
-    if (item.key == 'advanced') {
-      /**
-       * 在实名认证的时候 
-        1. 先判断初级认证是否打开  如果是false  就不需要初级认证    直接放行
-        2.如果初级认证是true  在判断用户的初级认证状态是否等于1  如果是1 放行
-       * 
-      */
-      const target = listArray.value.find((item) => item.key == 'primary')
-      // 判断是否经过初级认证
-      if (target && target.isOpen) {
-        const auditStatusPrimary = userInfo.value.detail.auditStatusPrimary
-        if (auditStatusPrimary && auditStatusPrimary == 1) {
-          router.push(item.jumpUrl)
-        } else {
-          _toast('please_primary')
-        }
-      } else {
-        router.push(item.jumpUrl)
-      }
-    } else {
-      router.push(item.jumpUrl)
-    }
+    // if (item.key == 'advanced') {
+    //   /**
+    //    * 在实名认证的时候 
+    //     1. 先判断初级认证是否打开  如果是false  就不需要初级认证    直接放行
+    //     2.如果初级认证是true  在判断用户的初级认证状态是否等于1  如果是1 放行
+    //    * 
+    //   */
+    //   const target = listArray.value.find((item) => item.key == 'primary')
+    //   // 判断是否经过初级认证
+    //   if (target && target.isOpen) {
+    //     const auditStatusPrimary = userInfo.value.detail.auditStatusPrimary
+    //     if (auditStatusPrimary && auditStatusPrimary == 1) {
+    //       router.push(item.jumpUrl)
+    //     } else {
+    //       _toast('please_primary')
+    //     }
+    //   } else {
+    //     router.push(item.jumpUrl)
+    //   }
+    // } else {
+    //   router.push(item.jumpUrl)
+    // }
+	router.push(item.jumpUrl)
   }
 }
 </script>
