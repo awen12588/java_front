@@ -213,7 +213,7 @@
             label="状态"
             align="center"
             key="status"
-            v-if="columns[5].visible"
+            v-if="columns[2].visible"
           >
             <template slot-scope="scope">
               <el-switch
@@ -235,16 +235,17 @@
           <el-table-column
             label="注册链接"
             align="center"
-            key="deptName"
-            prop="dept.deptName"
+            key="regDomain"
+            prop="regDomain"
             v-if="columns[4].visible"
             :show-overflow-tooltip="true"
+            width="360"
           />
           <el-table-column
             label="所属上级"
             align="center"
-            key="phonenumber"
-            prop="phonenumber"
+            key="parentName"
+            prop="parentName"
             v-if="columns[5].visible"
             width="120"
           />
@@ -282,7 +283,7 @@
             align="center"
             key="userType"
             prop="userType"
-            v-if="columns[6].visible"
+            v-if="columns[7].visible"
             width="160"
           >
             <template slot-scope="scope">
@@ -405,7 +406,7 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="所属上级" prop="parentId">
+            <el-form-item label="所属上级" prop="parentId" v-if="form.userId == undefined">
               <el-select v-model="form.parentId" placeholder="请选择上级">
                 <el-option
                   v-for="dict in dict.type.sys_user_type"
@@ -459,7 +460,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item
-              v-if="form.userId == undefined"
+
               label="用户名称"
               prop="userName"
             >
@@ -889,11 +890,12 @@ export default {
       columns: [
         { key: 0, label: `用户编号`, visible: true },
         { key: 1, label: `用户名称`, visible: true },
-        { key: 2, label: `用户昵称`, visible: true },
-        { key: 3, label: `部门`, visible: true },
-        { key: 4, label: `手机号码`, visible: true },
-        { key: 5, label: `状态`, visible: true },
+        { key: 2, label: `状态`, visible: true },
+        { key: 3, label: `邀请码`, visible: true },
+        { key: 4, label: `注册链接`, visible: true },
+        { key: 5, label: `所属上级`, visible: true },
         { key: 6, label: `创建时间`, visible: true },
+        { key: 7, label: `用户类型`, visible: true },
       ],
       // 表单校验
       rules: {

@@ -6,7 +6,7 @@
     width="500px"
     append-to-body
     @close="cancel"
-    
+
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
       <el-form-item label="用户ID">
@@ -32,6 +32,7 @@
           placeholder="请选择资产类型"
           clearable
           style="width: 100%"
+          disabled
         >
           <el-option
             v-for="dict in dict.type.t_asset_type"
@@ -139,7 +140,7 @@ export default {
       let tempObj = this.showAssetList.find(
         (elem) => elem.symbol == this.form.symbol
       );
-      return tempObj?.amout || 0;
+      return tempObj?.amount || 0;
     },
     /**
      * 资产列表
@@ -159,7 +160,7 @@ export default {
     async getAssetList() {
       if (this.user?.userId) {
         this.reset();
-        this.form.type = this.dict.type.t_asset_type[0]?.value;
+        this.form.type = this.dict.type.t_asset_type[1]?.value;
         this.form.userId = this.user.userId;
 
         const res = await getAssetList({

@@ -100,6 +100,7 @@
         <el-table-column label="充值地址" align="center" prop="address" />
 
         <el-table-column
+          v-if="false"
           label="操作"
           align="center"
           fixed="right"

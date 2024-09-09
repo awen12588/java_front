@@ -7,13 +7,13 @@
     width="600px"
     append-to-body
     @close="cancel"
-    
+
   >
     <el-tabs v-model="activeName">
       <el-tab-pane label="登录密码" name="first">
         <el-form
           ref="loginPwdForm"
-          :rules="fundPwdFormRules"
+          :rules="loginPwdFormRules"
           :model="loginPwdForm"
           label-width="100px"
         >
@@ -24,7 +24,7 @@
               disabled
             ></el-input>
           </el-form-item>
-          <el-form-item label="密码">
+          <el-form-item label="密码" prop="loginPassword">
             <el-input
               v-model="loginPwdForm.loginPassword"
               style="width: 400px"
@@ -86,7 +86,7 @@ export default {
         userId: "",
         loginPassword: "123456",
       },
-      fundPwdFormRules: {
+      loginPwdFormRules: {
         loginPassword: [
           { required: true, message: "登录密码不能为空", trigger: "blur" },
         ],

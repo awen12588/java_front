@@ -47,13 +47,13 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="地址" prop="address">
+        <!-- <el-form-item label="地址" prop="address">
           <el-input
             v-model="queryParams.address"
             clearable
             @keyup.enter.native="handleQuery"
           />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="冻结状态" prop="status">
           <el-select v-model="queryParams.status" clearable>
             <el-option
@@ -65,13 +65,13 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="玩家代理" prop="appParentIds">
+        <!-- <el-form-item label="玩家代理" prop="appParentIds">
           <el-input
             v-model="queryParams.appParentIds"
             clearable
             @keyup.enter.native="handleQuery"
           />
-        </el-form-item>
+        </el-form-item> -->
 
         <el-form-item label="注册域名" prop="host">
           <el-input
@@ -165,12 +165,13 @@
           v-if="columns[2].visible"
         />
         <el-table-column
-          label="备注"
-          min-width="180"
+          label="手机号"
+          min-width="150"
           align="center"
-          prop="remark"
-          v-if="columns[3].visible"
+          prop="phone"
+          v-if="columns[14].visible"
         />
+
         <el-table-column
           label="邮箱"
           min-width="150"
@@ -180,6 +181,20 @@
         />
 
         <el-table-column
+          label="是否冻结"
+          align="center"
+          prop="status"
+          v-if="columns[7].visible"
+        >
+          <template slot-scope="scope">
+            <dict-tag
+              :options="dict.type.app_user_status"
+              :value="scope.row.status"
+            />
+          </template>
+        </el-table-column>
+
+        <!-- <el-table-column
           label="地址"
           min-width="130"
           align="center"
@@ -206,7 +221,7 @@
             <div v-else>无地址</div>
           </template>
         </el-table-column>
-        <!-- <el-table-column
+        <el-table-column
           label="地址类型"
           align="center"
           prop="walletType"
@@ -220,27 +235,34 @@
           </template>
         </el-table-column> -->
         <el-table-column
-          label="是否冻结"
-          align="center"
-          prop="status"
-          v-if="columns[7].visible"
-        >
-          <template slot-scope="scope">
-            <dict-tag
-              :options="dict.type.app_user_status"
-              :value="scope.row.status"
-            />
-          </template>
-        </el-table-column>
-
-        <el-table-column
-          label="玩家代理"
+          label="余额(含体验金)"
           min-width="130"
           align="center"
           prop="appParentIds"
           v-if="columns[8].visible"
         />
         <el-table-column
+          label="体验金"
+          min-width="130"
+          align="center"
+          prop="appParentIds"
+          v-if="columns[8].visible"
+        />
+        <!-- <el-table-column
+          label="玩家代理"
+          min-width="130"
+          align="center"
+          prop="appParentIds"
+          v-if="columns[8].visible"
+        /> -->
+        <el-table-column
+          label="上级代理"
+          min-width="130"
+          align="center"
+          prop="appParentNames"
+          v-if="columns[9].visible"
+        />
+        <!-- <el-table-column
           label="玩家代理用户名"
           min-width="130"
           align="center"
@@ -260,6 +282,20 @@
           align="center"
           prop="adminParentNames"
           v-if="columns[11].visible"
+        /> -->
+        <el-table-column
+          label="登录IP"
+          min-width="130"
+          align="center"
+          prop="loginIp"
+          v-if="columns[12].visible"
+        />
+        <el-table-column
+          label="登录时间"
+          min-width="130"
+          align="center"
+          prop="loginTime"
+          v-if="columns[12].visible"
         />
         <el-table-column
           label="注册IP"
@@ -275,13 +311,7 @@
           prop="host"
           v-if="columns[13].visible"
         />
-        <el-table-column
-          label="手机号"
-          min-width="150"
-          align="center"
-          prop="phone"
-          v-if="columns[14].visible"
-        />
+
         <el-table-column
           label="注册时间"
           sortable
@@ -337,7 +367,7 @@
                 type="success"
                 v-hasPermi="['bussiness:user:sendBous']"
                 @click="openDialogKey('showWinningsDialog', scope.row)"
-                >彩金</el-button
+                >体验金</el-button
               >
               <el-button
                 size="mini"
@@ -395,7 +425,7 @@
     <!-- 添加或修改玩家用户对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-        <el-form-item label="后台代理ID" prop="adminParentIds">
+        <el-form-item label="所属代理" prop="adminParentIds">
           <el-input
             disabled
             v-model="form.adminParentIds"
@@ -416,7 +446,7 @@
           <el-input disabled v-model="form.phone" placeholder="请输入手机号" />
         </el-form-item>
 
-        <el-form-item label="地址" prop="address">
+       <!-- <el-form-item label="地址" prop="address">
           <el-input v-model="form.address" placeholder="请输入地址" />
         </el-form-item>
 
@@ -429,7 +459,7 @@
               :value="dict.value"
             ></el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="用户类型" prop="isTest">
           <el-select v-model="form.isTest" placeholder="请选择状态">
             <el-option
@@ -457,12 +487,12 @@
             ></el-option>
           </el-select>
         </el-form-item> -->
-        <el-form-item label="秒合约打码量" prop="totleAmont">
+       <!-- <el-form-item label="秒合约打码量" prop="totleAmont">
           <el-input
             v-model="form.totleAmont"
             placeholder="请输入秒合约打码量"
           />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="秒合约包赢状态" prop="buff">
           <el-select v-model="form.buff" placeholder="请选择包赢状态">
             <el-option
@@ -473,7 +503,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="玩家代理" prop="appParentIds">
+        <!-- <el-form-item label="玩家代理" prop="appParentIds">
           <el-input v-model="form.appParentIds" disabled />
         </el-form-item>
         <el-form-item label="邀请码" prop="activeCode">
@@ -492,18 +522,18 @@
         </el-form-item>
         <el-form-item label="注册域名" prop="host">
           <el-input disabled v-model="form.host" placeholder="请输入注册域名" />
-        </el-form-item>
+        </el-form-item> -->
 
         <el-form-item label="邮箱" prop="email">
           <el-input disabled v-model="form.email" placeholder="请输入邮箱" />
         </el-form-item>
-        <el-form-item label="vip等级 " prop="level">
+        <!-- <el-form-item label="vip等级 " prop="level">
           <el-input
             disabled
             v-model="form.level"
             placeholder="请输入vip等级 "
           />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="备注" prop="remark">
           <el-input
             v-model="form.remark"
@@ -530,7 +560,7 @@
         :rules="addFormRules"
         label-width="120px"
       >
-        <el-form-item label="后台代理ID" prop="adminParentIds">
+        <el-form-item label="所属代理" prop="adminParentIds">
           <el-select v-model="addForm.adminParentIds">
             <el-option
               v-for="dict in AgentInfoList"
@@ -557,6 +587,12 @@
             ></el-option>
           </el-select>
         </el-form-item> -->
+        <el-form-item label="手机号" prop="phone">
+          <el-input v-model="addForm.phone" placeholder="请输入手机号" />
+        </el-form-item>
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model="addForm.email" placeholder="请输入邮箱" />
+        </el-form-item>
         <el-form-item label="用户类型" prop="isTest">
           <el-select v-model="addForm.isTest" placeholder="请选择状态">
             <el-option
@@ -621,9 +657,9 @@
                 <li>登录名：{{ userDetail.loginName }}</li>
                 <li>邮箱：{{ userDetail.email }}</li>
                 <li>注册IP：{{ userDetail.registerIp }}</li>
-                <li>地址类型：{{ userDetail.walletType }}</li>
+                <!-- <li>地址类型：{{ userDetail.walletType }}</li> -->
                 <li>注册域名：{{ userDetail.host }}</li>
-                <li>上级ID：{{ userDetail.appParentIds }}</li>
+                <!-- <li>上级ID：{{ userDetail.appParentIds }}</li> -->
                 <li>
                   用户类型：{{
                     userDetail.isTest == 0 ? "正常用户" : "测试用户"
@@ -675,7 +711,7 @@
                   width="150"
                   height="36"
                   align="center"
-                  prop="amout"
+                  prop="amount"
                 />
                 <el-table-column
                   label="占用金额"
@@ -781,10 +817,10 @@ export default {
           name: "1",
           type: "平台资产",
         },
-        {
-          name: "2",
-          type: "理财资产",
-        },
+        // {
+        //   name: "2",
+        //   type: "理财资产",
+        // },
         {
           name: "3",
           type: "合约资产",
@@ -886,6 +922,13 @@ export default {
           {
             required: true,
             message: "用户名不能为空",
+            trigger: "blur",
+          },
+        ],
+        adminParentIds: [
+          {
+            required: true,
+            message: "所属代理不能为空",
             trigger: "blur",
           },
         ],
@@ -1016,7 +1059,7 @@ export default {
     },
     /**搜索玩家资产 */
     serachAsset() {
-      listAsset({ symbol: this.symbol }).then((res) => {
+      listAsset({ userId: this.userId, symbol: this.symbol }).then((res) => {
         this.assetList = res.rows;
       });
     },
@@ -1047,7 +1090,7 @@ export default {
     },
     getUserAsset() {
       listAsset({ userId: this.userId, type: this.navIndex }).then((res) => {
-        this.assetList = res.rows;
+        this.assetList = res.rows.filter((elem) => elem.type == this.navIndex);
       });
     },
 
@@ -1132,11 +1175,13 @@ export default {
       this.addForm = {
         loginName: null,
         loginPassword: null,
-        isTest: null,
+        isTest: 0,
         walletType: null,
-        status: null,
+        status: 0,
+        phone: null,
+        email: null,
         adminParentIds: null,
-        buff: null,
+        buff: 0,
       };
       this.getAgencyList();
       this.addOpen = true;
