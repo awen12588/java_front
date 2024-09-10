@@ -169,7 +169,7 @@
           min-width="150"
           align="center"
           prop="phone"
-          v-if="columns[14].visible"
+          v-if="columns[3].visible"
         />
 
         <el-table-column
@@ -184,7 +184,7 @@
           label="是否冻结"
           align="center"
           prop="status"
-          v-if="columns[7].visible"
+          v-if="columns[5].visible"
         >
           <template slot-scope="scope">
             <dict-tag
@@ -238,15 +238,15 @@
           label="余额(含体验金)"
           min-width="130"
           align="center"
-          prop="appParentIds"
-          v-if="columns[8].visible"
+          prop="totalBalance"
+          v-if="columns[6].visible"
         />
         <el-table-column
           label="体验金"
           min-width="130"
           align="center"
-          prop="appParentIds"
-          v-if="columns[8].visible"
+          prop="trailAmount"
+          v-if="columns[7].visible"
         />
         <!-- <el-table-column
           label="玩家代理"
@@ -259,8 +259,8 @@
           label="上级代理"
           min-width="130"
           align="center"
-          prop="appParentNames"
-          v-if="columns[9].visible"
+          prop="adminParentNames"
+          v-if="columns[8].visible"
         />
         <!-- <el-table-column
           label="玩家代理用户名"
@@ -288,28 +288,28 @@
           min-width="130"
           align="center"
           prop="loginIp"
-          v-if="columns[12].visible"
+          v-if="columns[9].visible"
         />
         <el-table-column
           label="登录时间"
           min-width="130"
           align="center"
           prop="loginTime"
-          v-if="columns[12].visible"
+          v-if="columns[10].visible"
         />
         <el-table-column
           label="注册IP"
           min-width="130"
           align="center"
           prop="registerIp"
-          v-if="columns[12].visible"
+          v-if="columns[11].visible"
         />
         <el-table-column
           label="注册域名"
           min-width="180"
           align="center"
           prop="host"
-          v-if="columns[13].visible"
+          v-if="columns[12].visible"
         />
 
         <el-table-column
@@ -318,7 +318,7 @@
           min-width="180"
           align="center"
           prop="createTime"
-          v-if="columns[15].visible"
+          v-if="columns[13].visible"
         />
 
         <el-table-column
@@ -443,7 +443,7 @@
           />
         </el-form-item>
         <el-form-item label="手机号" prop="phone">
-          <el-input disabled v-model="form.phone" placeholder="请输入手机号" />
+          <el-input v-model="form.phone" placeholder="请输入手机号" />
         </el-form-item>
 
        <!-- <el-form-item label="地址" prop="address">
@@ -525,7 +525,7 @@
         </el-form-item> -->
 
         <el-form-item label="邮箱" prop="email">
-          <el-input disabled v-model="form.email" placeholder="请输入邮箱" />
+          <el-input v-model="form.email" placeholder="请输入邮箱" />
         </el-form-item>
         <!-- <el-form-item label="vip等级 " prop="level">
           <el-input
@@ -666,17 +666,30 @@
                   }}
                 </li>
                 <li>冻结状态：{{ userDetail.status ? "冻结" : "正常" }}</li>
-                <li>后台代理：{{ userDetail.adminParentIds }}</li>
+                <li>后台代理：{{ userDetail.adminParentNames }}</li>
                 <li>地址：{{ userDetail.address }}</li>
               </ul>
             </div>
             <div class="content2" v-if="currentTab.id == 1">
               <SearchFormBox>
-                <el-input
+                <el-select
+                  v-model="symbol"
+                  placeholder="请选择币种"
+                  clearable
+                  style="width: 250px; margin-right: 15px"
+                >
+                  <el-option
+                    v-for="dict in showSymbolList"
+                    :key="dict.symbol"
+                    :label="dict.symbol"
+                    :value="dict.symbol"
+                  />
+                </el-select>
+                <!-- <el-input
                   style="width: 150px; margin-right: 15px"
                   v-model="symbol"
                   clearable
-                />
+                /> -->
                 <el-button
                   type="primary"
                   icon="el-icon-search"
@@ -718,6 +731,13 @@
                   width="150"
                   align="center"
                   prop="occupiedAmount"
+                />
+                <el-table-column
+                  v-if="navIndex==3"
+                  label="体验金"
+                  width="100"
+                  align="center"
+                  prop="trailAmount"
                 />
                 <el-table-column
                   label="可用金额"
@@ -833,6 +853,7 @@ export default {
       detailTitle: "",
       userDetail: {},
       assetList: [],
+      symbolList: [],
       // 当前的tab
       currentTab: {},
       //详情log
@@ -947,19 +968,17 @@ export default {
         { key: 0, label: `用户ID`, visible: true },
         { key: 1, label: `用户类型`, visible: true },
         { key: 2, label: `登录名`, visible: true },
-        { key: 3, label: `备注`, visible: true },
+        { key: 3, label: `手机号`, visible: true },
         { key: 4, label: `邮箱`, visible: true },
-        { key: 5, label: `地址`, visible: true },
-        { key: 6, label: `地址类型`, visible: true },
-        { key: 7, label: `是否冻结`, visible: true },
-        { key: 8, label: `玩家代理`, visible: true },
-        { key: 9, label: `玩家代理用户名`, visible: true },
-        { key: 10, label: `后台代理`, visible: true },
-        { key: 11, label: `后台代理用户名`, visible: true },
-        { key: 12, label: `注册IP`, visible: true },
-        { key: 13, label: `注册域名`, visible: true },
-        { key: 14, label: `手机号`, visible: true },
-        { key: 15, label: `注册时间`, visible: true },
+        { key: 5, label: `是否冻结`, visible: true },
+        { key: 6, label: `余额(含体验金)`, visible: true },
+        { key: 7, label: `体验金`, visible: true },
+        { key: 8, label: `上级代理`, visible: true },
+        { key: 9, label: `登录IP`, visible: true },
+        { key: 10, label: `登录时间`, visible: true },
+        { key: 11, label: `注册IP`, visible: true },
+        { key: 12, label: `注册域名`, visible: true },
+        { key: 13, label: `注册时间`, visible: true },
       ],
     };
   },
@@ -974,6 +993,18 @@ export default {
         { id: 1, tittle: "资产详情" },
       ];
       return tempList;
+    },
+    /**
+     * 资产列表
+     */
+    showSymbolList() {
+       return this.symbolList.filter((elem) => elem.type == this.navIndex);
+      // let list = this.assetList.filter((elem) => elem.type == this.navIndex);
+      // let reversedNumbers = [];
+      // for (let i = list.length - 1; i >= 0; i--) {
+      //   reversedNumbers.push(list[i]);
+      // }
+      // return reversedNumbers;
     },
   },
   methods: {
@@ -1059,8 +1090,8 @@ export default {
     },
     /**搜索玩家资产 */
     serachAsset() {
-      listAsset({ userId: this.userId, symbol: this.symbol }).then((res) => {
-        this.assetList = res.rows;
+      listAsset({ userId: this.userId, symbol: this.symbol, type: this.navIndex }).then((res) => {
+        this.assetList = res.rows.filter((elem) => elem.type == this.navIndex);
       });
     },
     /**重置玩家资产 */
@@ -1090,7 +1121,7 @@ export default {
     },
     getUserAsset() {
       listAsset({ userId: this.userId, type: this.navIndex }).then((res) => {
-        this.assetList = res.rows.filter((elem) => elem.type == this.navIndex);
+        this.assetList = this.symbolList = res.rows.filter((elem) => elem.type == this.navIndex);
       });
     },
 

@@ -6,7 +6,7 @@
     width="500px"
     append-to-body
     @close="cancel"
-    
+
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
       <el-form-item label="用户ID">
@@ -136,7 +136,7 @@ export default {
       let tempObj = this.showAssetList.find(
         (elem) => elem.symbol == this.form.symbol
       );
-      return tempObj?.amout || 0;
+      return tempObj?.amount || 0;
     },
     /**
      * 资产列表

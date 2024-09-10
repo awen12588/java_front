@@ -1,7 +1,7 @@
 <!-- 彩金 -->
 <template>
   <el-dialog
-    title="彩金"
+    title="体验金"
     :visible.sync="visible"
     width="500px"
     append-to-body
@@ -159,12 +159,13 @@ export default {
   methods: {
     async getAssetList() {
       if (this.user?.userId) {
-        this.reset();
+        // this.reset();
         this.form.type = this.dict.type.t_asset_type[1]?.value;
         this.form.userId = this.user.userId;
 
         const res = await getAssetList({
           userId: this.user.userId,
+          type: 3,
           pageNum: 1,
           pageSize: 1000,
         });
@@ -208,7 +209,7 @@ export default {
     // 取消按钮
     cancel() {
       this.$emit("input", false);
-      this.reset();
+      // this.reset();
     },
   },
 };

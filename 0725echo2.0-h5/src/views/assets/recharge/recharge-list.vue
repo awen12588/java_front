@@ -16,6 +16,7 @@
 
 <script setup>
 import { _t18 } from '@/utils/public'
+import { dispatchCustomEvent } from '@/utils'
 import { useToast } from '@/hook/useToast'
 const { _toast } = useToast()
 const router = useRouter()
@@ -27,7 +28,7 @@ const props = defineProps({
 })
 const flag = ref(true)
 const toClick = (item) => {
-  router.push(`/recharge-apply?type=${item.title}&coin=${item.icon}`)
+	router.push(`/recharge-apply?type=${item.title}&coin=${item.icon}`)
 }
 </script>
 
