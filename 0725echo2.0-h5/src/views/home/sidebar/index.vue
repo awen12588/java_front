@@ -11,10 +11,10 @@
         <!-- 登录 -->
         <ButtonBar :btnValue="_t18('login')" />
       </div>
-      <div class="btnBox" @click="_toView('/sign-up')">
-        <!-- 注册 -->
+	  <!-- 注册 -->
+      <!-- <div class="btnBox" @click="_toView('/sign-up')">
         <ButtonBar :btnReverse="false" :btnValue="_t18('register')" :btnColor="'#fff'" />
-      </div>
+      </div> -->
     </div>
     <!-- 已登录 -->
     <div v-if="isSign && !userInfo.addressFlag" class="logged" @click="exit">

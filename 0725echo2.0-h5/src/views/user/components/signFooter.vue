@@ -14,11 +14,11 @@
     <div class="btnBox" @click="toLogin">
       <ButtonBar :btnValue="_t18('login')" />
     </div>
-    <div class="account">
+    <!-- <div class="account">
       {{ _t18('login_noAccount') }}？<span @click="$router.push('/sign-up')">{{
         _t18('login_toRegister')
       }}</span>
-    </div>
+    </div> -->
   </div>
   <!-- 注册 -->
   <div class="box" v-if="props.type == 1">

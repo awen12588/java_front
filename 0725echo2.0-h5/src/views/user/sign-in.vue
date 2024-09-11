@@ -31,30 +31,36 @@ import { useMainStore } from '@/store/index.js'
 const mainStore = useMainStore()
 const tabList = computed(() => {
   let list = []
-  if (mainStore.getLoginMethodList.ordinaryIsOpen || ['aams'].includes(__config._APP_ENV)) {
-    let obj = {}
-    obj['id'] = 1
-    obj['title'] = _t18('login_account', ['bitmake', 'aams'])
-    obj['type'] = '1'
-    obj['componentName'] = AccountLogin
-    list.push(obj)
-  }
-  if (mainStore.getLoginMethodList.emailIsOpen && !['aams'].includes(__config._APP_ENV)) {
-    let obj = {}
-    obj['id'] = 2
-    obj['title'] = _t18('login_email')
-    obj['type'] = '2'
-    obj['componentName'] = EmailLogin
-    list.push(obj)
-  }
-  if (mainStore.getLoginMethodList.phoneIsOpen) {
-    let obj = {}
-    obj['id'] = 3
-    obj['title'] = _t18('login_mobile')
-    obj['type'] = '3'
-    obj['componentName'] = MobileLogin
-    list.push(obj)
-  }
+  let obj = {}
+  obj['id'] = 1
+  obj['title'] = _t18('login_account', ['bitmake', 'aams'])
+  obj['type'] = '1'
+  obj['componentName'] = AccountLogin
+  list.push(obj)
+  // if (mainStore.getLoginMethodList.ordinaryIsOpen || ['aams'].includes(__config._APP_ENV)) {
+  //   let obj = {}
+  //   obj['id'] = 1
+  //   obj['title'] = _t18('login_account', ['bitmake', 'aams'])
+  //   obj['type'] = '1'
+  //   obj['componentName'] = AccountLogin
+  //   list.push(obj)
+  // }
+  // if (mainStore.getLoginMethodList.emailIsOpen && !['aams'].includes(__config._APP_ENV)) {
+  //   let obj = {}
+  //   obj['id'] = 2
+  //   obj['title'] = _t18('login_email')
+  //   obj['type'] = '2'
+  //   obj['componentName'] = EmailLogin
+  //   list.push(obj)
+  // }
+  // if (mainStore.getLoginMethodList.phoneIsOpen) {
+  //   let obj = {}
+  //   obj['id'] = 3
+  //   obj['title'] = _t18('login_mobile')
+  //   obj['type'] = '3'
+  //   obj['componentName'] = MobileLogin
+  //   list.push(obj)
+  // }
   if (['coinsexpto'].includes(__config._APP_ENV)) {
     list = list.reverse()
   }

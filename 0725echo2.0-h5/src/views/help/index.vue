@@ -1,6 +1,6 @@
 <template>
   <!-- 帮助中心 -->
-  help_center
+  <!-- help_center -->
   <HeaderBar :currentName="_t18(`help_center`)" />
   <div v-if="list.length > 0">
     <div class="itemList" v-for="(item, index) in list" :key="index">

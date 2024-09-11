@@ -1,12 +1,24 @@
 <!-- 充值申请 -->
 <template>
   <HeaderBar :currentName="currentName" :cuttentRight="cuttentRight"></HeaderBar>
+  <template v-if="addressList.length > 0">
   <!-- 二维码 -->
   <div class="erweima">
     <QRCode :address="address"></QRCode>
   </div>
   <!-- 申请信息 -->
   <div class="applyMes">
+	 <div class="v-card-head">
+	   <div class="left"></div>
+	   <div class="right">
+	     <div class="v-exboxcheck-container">	 
+	       <div class="box" v-for="(item, index) in addressList" :key="index" @click="selectAddress(index)">
+	         <div class="check" :class="{ checked: selectedAddressIndex === index }"></div>
+			 {{ item.type }}
+			</div>
+	     </div>
+	   </div>
+	 </div> 
     <div class="address">
       <!-- 充值地址 -->
       <p class="top">{{ _t18('recharge_address', ['bitmake']) }}({{ route.query.type }})</p>
@@ -60,6 +72,25 @@
       </div>
     </div>
   </template>
+  </template>
+ <template v-else>
+	  <div class="v-card-none">
+	    <p>{{ _t18('findCustorm_text') }}</p>
+	    <div class="method-btn">
+	      <div class="btns">
+	        <div class="btnd" @click="dispatchCustomEvent('event_serviceChange')">
+	          <img
+	            class="btn-image"
+	            src="@/assets/defi/icon_chat.png"
+	            alt="Chat Icon"
+	          />
+	          <div class="btn-text">{{ _t18('findCustorm') }}</div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+  </template>
+  
   <!-- <template v-else-if="['gmtoin'].includes(_getConfig('_APP_ENV'))">
     <div class="tip-list">
       <div class="tip">{{ _t18('account_balance_info') }}</div>
@@ -86,6 +117,7 @@ import { useToast } from '@/hook/useToast'
 import { useCopy } from '@/hook/useCopy'
 import { useRouter, useRoute } from 'vue-router'
 import { useMainStore } from '@/store'
+import { dispatchCustomEvent } from '@/utils'
 import { onMounted, reactive } from 'vue'
 
 const { _toast } = useToast()
@@ -174,20 +206,44 @@ const submit = debounce(() => {
   })
 }, 500)
 
+const hasValidAddress = (addresses) => {
+    return addresses.some(item => item.address !== null && item.address !== '');
+};
+const selectedAddressIndex = ref(0);
 const mainStore = useMainStore()
 /**
- * 充值地址
+ * 充值地址列表
  */
-const address = computed(() => {
-  // let rechargeObj = mainStore.getRechargeList.find((elem) => elem.coinName == route.query.type)
-  //console.log(rechargeObj)
-  console.log(mainStore.userRechageMap[route.query.type])
-  if (mainStore.userRechageMap[route.query.type]) {
-    return mainStore.userRechageMap[route.query.type][route.query.type]
+const addressList = computed(() => {
+  const rechargeData = mainStore.userRechageMap[route.query.type];
+  if (rechargeData && hasValidAddress(rechargeData.addresses)) {
+	return rechargeData.addresses;
   } else {
-    return ''
+	return [];
   }
-})
+});
+
+const address = computed(() => {
+  const addresses = addressList.value;
+  const validAddress = addresses[selectedAddressIndex.value];
+  return validAddress ? validAddress.address : '';
+});
+
+const selectAddress = (index) => {
+  selectedAddressIndex.value = index;
+};
+// const address = computed(() => {
+//   // let rechargeObj = mainStore.getRechargeList.find((elem) => elem.coinName == route.query.type)
+//   //console.log(rechargeObj)
+//   const rechargeData = mainStore.userRechageMap[route.query.type];
+//   const validAddress = hasValidAddress(rechargeData.addresses);
+//   if (rechargeData && validAddress) {
+// 	  const addressList = rechargeData.address
+//     return rechargeData.addresses[0].address
+//   } else {
+//     return ''
+//   }
+// })
 </script>
 
 <style lang="scss" scoped>
@@ -209,6 +265,48 @@ const address = computed(() => {
       margin-bottom: 10px;
     }
   }
+   .v-card-head {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--ex-border-color4);
+      padding: 10px 15px 10px 10px;
+      align-items: center;
+	  .left {
+	      font-size: 13px;
+	      font-weight: 400;
+	  }
+	  .right {
+	      display: flex;
+		  .v-exboxcheck-container {
+		      display: flex;
+		      align-items: center;  
+			  .box {
+			      margin-right: 10px;
+			      position: relative;
+			      border-radius: 2px;
+			      padding: 3px 15px;
+			      box-sizing: border-box;
+			      border: 1px solid;
+			      font-size: 12px;
+			      font-weight: 400;
+			      border: 1px solid var(--ex-border-color4);
+			  	  
+			  	  .check {
+			  	      position: absolute;
+			  	      right: -1px;
+			  	      top: -1px;
+			  	      width: 15px;
+			  	      height: 15px;
+			  	  }
+				  .checked {
+				      background: url(@/assets/defi/checked.png) no-repeat;
+				      background-size: 100% 100%;
+				  }
+			  }
+		  }
+	  }
+  }
+  
   .address {
     .bottom {
       word-break: break-all;
@@ -245,6 +343,37 @@ const address = computed(() => {
       }
     }
   }
+}
+.v-card-none {
+    min-height: 200px;
+    position: relative;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+	
+	.method-btn {
+	    background-color: initial;
+	    border-radius: 8px;
+	    border: 2px solid var(--ex-border-color4);
+		.btns {
+		    display: flex;
+		    justify-content: space-around;
+		    align-items: center;
+		    height: 85px;
+			.btnd {
+			    text-align: center;
+				.btn-image {
+				    width: 32px;
+				    height: 32px;
+				}
+				.btn-text {
+				    text-align: center;
+				    font-size: 12px;
+				}
+			}
+		}
+	}
 }
 .btn {
   padding: 0 15px 55px;

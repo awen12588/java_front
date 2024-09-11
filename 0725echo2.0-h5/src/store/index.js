@@ -276,7 +276,6 @@ export const useMainStore = defineStore('main', {
       async function (self) {
         let promiseList = []
         promiseList.push(getUserRechageNewApi('', ''))
-
         // self.settingConfig.ASSET_COIN.map((elem) => {
         //   if (self.userRechageMap[elem.coinName] == undefined) {
         //     promiseList.push(getUserRechageNewApi(elem.coin, elem.coinName))

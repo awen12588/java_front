@@ -21,7 +21,7 @@
             </el-form-item>
           </el-form>
         </el-tab-pane>
-        <el-tab-pane label="登录注册配置" name="second">
+        <el-tab-pane label="登录注册配置" name="second" v-if="false">
           <el-form
             ref="loginForm"
             :model="loginForm"

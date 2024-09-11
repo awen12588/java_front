@@ -1247,16 +1247,16 @@ export default {
             updateUser(this.form).then((response) => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
-              // this.getList();
+              this.getList();
             });
           } else {
             addUser(this.form).then((response) => {
               this.$modal.msgSuccess("新增成功");
               this.open = false;
-              // this.getList();
+              this.getList();
             });
           }
-           location.reload();
+           // location.reload();
         }
       });
     },

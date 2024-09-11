@@ -32,30 +32,36 @@ const route = useRoute()
 const mainStore = useMainStore()
 const tabList = computed(() => {
   let list = []
-  if (mainStore.getLoginMethodList.ordinaryIsOpen) {
-    let obj = {}
-    obj['id'] = 1
-    obj['title'] = _t18('register_account', ['bitmake'])
-    obj['type'] = '1'
-    obj['componentName'] = AccountRegister
-    list.push(obj)
-  }
-  if (mainStore.getLoginMethodList.emailIsOpen) {
-    let obj = {}
-    obj['id'] = 2
-    obj['title'] = _t18('register_email')
-    obj['type'] = '2'
-    obj['componentName'] = EmailRegister
-    list.push(obj)
-  }
-  if (mainStore.getLoginMethodList.phoneIsOpen) {
-    let obj = {}
-    obj['id'] = 3
-    obj['title'] = _t18('register_mobile')
-    obj['type'] = '3'
-    obj['componentName'] = MobileRegister
-    list.push(obj)
-  }
+  let obj = {}
+  obj['id'] = 3
+  obj['title'] = _t18('register_mobile')
+  obj['type'] = '3'
+  obj['componentName'] = MobileRegister
+  list.push(obj)
+  // if (mainStore.getLoginMethodList.ordinaryIsOpen) {
+  //   let obj = {}
+  //   obj['id'] = 1
+  //   obj['title'] = _t18('register_account', ['bitmake'])
+  //   obj['type'] = '1'
+  //   obj['componentName'] = AccountRegister
+  //   list.push(obj)
+  // }
+  // if (mainStore.getLoginMethodList.emailIsOpen) {
+  //   let obj = {}
+  //   obj['id'] = 2
+  //   obj['title'] = _t18('register_email')
+  //   obj['type'] = '2'
+  //   obj['componentName'] = EmailRegister
+  //   list.push(obj)
+  // }
+  // if (mainStore.getLoginMethodList.phoneIsOpen) {
+  //   let obj = {}
+  //   obj['id'] = 3
+  //   obj['title'] = _t18('register_mobile')
+  //   obj['type'] = '3'
+  //   obj['componentName'] = MobileRegister
+  //   list.push(obj)
+  // }
   if (['coinsexpto'].includes(__config._APP_ENV)) {
     list = list.reverse()
   }

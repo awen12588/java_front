@@ -51,7 +51,7 @@
         <i v-else>({{ _t18('optional') }})</i>
       </p>
       <div>
-        <input type="text" :placeholder="_t18('login_please')" v-model="formData3.invitCode" />
+        <input type="text" :placeholder="_t18('login_please')" v-model="formData3.invitCode" disabled/>
       </div>
     </div>
     <div class="formData">
@@ -89,7 +89,7 @@ const formData3 = ref({
   password2: '', //二次密码
   invitCode: route.query.invite_code, //邀请码
   code: '', //验证码
-  areaCode: '93' //区号
+  areaCode: '61' //区号
 })
 if (['bitbyex'].includes(__config._APP_ENV)) {
   formData3.value.areaCode = '1'
