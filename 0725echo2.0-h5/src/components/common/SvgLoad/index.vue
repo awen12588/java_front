@@ -20,14 +20,10 @@ const isCustomized = computed(() => props.platform.includes(__config._APP_ENV))
 const path = computed(() => {
   let tempPath = ''
   if (props.name) {
-	  let pname = props.name;
-	  if (pname === 'USDT') {
-		pname = pname.toLowerCase();
-	  }
     if (isCustomized.value) {
-      tempPath = `/resource/svg/${__theme}/${__config._APP_ENV}/${pname}.svg?${_APP_VERSION}`
+      tempPath = `/resource/svg/${__theme}/${__config._APP_ENV}/${props.name}.svg?${_APP_VERSION}`
     } else {
-      tempPath = `/resource/svg/${__theme}/${pname}.svg?${_APP_VERSION}`
+      tempPath = `/resource/svg/${__theme}/${props.name}.svg?${_APP_VERSION}`
     }
   }
   return tempPath

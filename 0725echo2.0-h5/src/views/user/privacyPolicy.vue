@@ -19,12 +19,35 @@ onMounted(async () => {
 </script>
 <style>
 .itemDetailObj {
-  font-size: 12px;
+  /* font-size: 12px; */
   padding: 10px 15px;
   color: var(--ex-default-font-color);
   line-height: 24px;
   word-wrap: break-word;
 }
+
+.itemDetailObj h1 {
+  color: #333;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.itemDetailObj h2 {
+  color: #333;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.itemDetailObj p {
+  line-height: 25.6px;
+  color: #666;
+}
+
+.itemDetailObj ul {
+  list-style-type: disc;
+  margin-left: 4em;
+}
+
 .itemDetailObj img {
   width: 100%;
 }

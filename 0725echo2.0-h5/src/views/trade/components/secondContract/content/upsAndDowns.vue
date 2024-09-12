@@ -666,7 +666,7 @@ const countdownClose = () => {
 const showBtn = (e) => {
   availableBalance.value =
     asset.value.filter((item) => {
-      return item.symbol === 'usdt'
+      return item.symbol === 'USDT'
     })[0].availableAmount + ''
   quantity.value = ''
   titleFlag.value = e

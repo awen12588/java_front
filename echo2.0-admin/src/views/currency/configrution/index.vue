@@ -629,6 +629,7 @@ export default {
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
+      this.getCoinList();
       this.reset();
       this.form = row;
       this.open = true;
