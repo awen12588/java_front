@@ -149,12 +149,12 @@
             </el-image>
           </template>
         </el-table-column>
-        <el-table-column label="手持照片" align="center" prop="handelUrl">
+        <el-table-column label="手持照片" align="center" prop="handleUrl">
           <template slot-scope="scope">
             <el-image
               style="width: 50px; height: 50px"
-              :src="scope.row.handelUrl"
-              :preview-src-list="[scope.row.handelUrl]"
+              :src="scope.row.handleUrl"
+              :preview-src-list="[scope.row.handleUrl]"
               fit="contain"
               class="img-box"
             >
@@ -233,7 +233,7 @@
               placement="bottom"
               width="50"
               trigger="click"
-            > 
+            >
               <div class="popover-table-menu-btn-list">-->
             <div v-if="scope.row.auditStatusPrimary == 3" class="operate">
               <p>初级审核：</p>
@@ -314,9 +314,9 @@
         <el-form-item label="国际" prop="country">
           <el-input v-model="form.country" placeholder="请输入国际" />
         </el-form-item>
-        <el-form-item label="手持身份证照片" prop="handelUrl">
+        <el-form-item label="手持身份证照片" prop="handleUrl">
           <el-input
-            v-model="form.handelUrl"
+            v-model="form.handleUrl"
             placeholder="请输入手持身份证照片"
           />
         </el-form-item>
@@ -426,7 +426,7 @@ export default {
         frontUrl: null,
         country: null,
         cardType: null,
-        handelUrl: null,
+        handleUrl: null,
         backUrl: null,
         userTardPwd: null,
         searchValue: null,
@@ -476,7 +476,7 @@ export default {
         frontUrl: null,
         country: null,
         cardType: null,
-        handelUrl: null,
+        handleUrl: null,
         backUrl: null,
         userTardPwd: null,
         createBy: null,

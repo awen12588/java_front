@@ -8,7 +8,7 @@ import { socketDict } from '@/config/dict'
 import PubSub from 'pubsub-js'
 import { _add, _div, _mul, priceFormat } from '@/utils/decimal'
 import _ from 'lodash'
-import { computed } from 'vue'
+import { computed,nextTick } from 'vue'
 import { useMainStore } from '@/store'
 import { useTradeStore } from '@/store/trade'
 import { debounce, throttle } from 'lodash'
@@ -37,12 +37,14 @@ const props = defineProps({
  */
 const priceScale = computed(() => {
   let tempPricescale = 10000
-  if (props.coinInfo?.amount > 100) {
+  if (props.coinInfo?.amount >= 100) {
     tempPricescale = 100
-  } else if (props.coinInfo?.amount < 0.1) {
-    tempPricescale = 1000000
-  } else if (props.coinInfo?.amount < 100) {
+  }  else if (props.coinInfo?.amount < 100 && props.coinInfo?.amount >= 1) {
     tempPricescale = 10000
+  }  else if (props.coinInfo?.amount < 1 && props.coinInfo?.amount > 0.1) {
+    tempPricescale = 1000000
+  }  else if (props.coinInfo?.amount < 0.1) {
+    tempPricescale = 100000000
   }
   return tempPricescale
 })
@@ -128,6 +130,15 @@ const eventTradeSymbolChange = debounce((e) => {
   // 设置币种
   setSymbol(symbol, currentInterval.interval, () => {
     Object.assign(currentCoinInfo, props.coinInfo)
+	// 确保新数据加载完成后再渲染
+	nextTick(() => {
+	  subscribeTrades({
+		coin: tempCoinInfo.coin,
+		symbol: tempCoinInfo.symbol,
+		interval: currentInterval.interval,
+		firstDataRequest: true
+	  });
+	});
   })
 }, 200)
 /**
@@ -160,6 +171,7 @@ onMounted(async () => {
     initWidget()
   })
 })
+
 
 onBeforeUnmount(() => {
   document.removeEventListener('event_tradeSymbolChange', eventTradeSymbolChange)

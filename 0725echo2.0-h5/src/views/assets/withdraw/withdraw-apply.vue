@@ -205,7 +205,10 @@ const hideBank = (item) => {
   str = str1 + ' *** *** ' + str2
   return str
 }
-
+const onSelect = (item)=> {
+  // 处理选择事件的逻辑
+  console.log('Selected item:', item);
+}
 const bankList = ref([])
 const getCardList = async () => {
   const res = await getBindCardList()
@@ -259,7 +262,7 @@ const submitForm = () => {
     _toast('withdraw_please_pwd')
     return
   }
-  if (userInfo.value.detail?.userTardPwd == null) {
+  if (userInfo.value.detail?.userTradePwd == null) {
     // showToast('请设置资金密码')
     flag = false
     _toast('withdraw_please_fundPwd')
@@ -356,6 +359,7 @@ onMounted(() => {
     getAddress()
   }
 })
+
 </script>
 
 <style lang="scss" scoped>
