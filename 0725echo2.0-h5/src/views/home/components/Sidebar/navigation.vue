@@ -109,7 +109,7 @@ const listArray = computed(() => {
 onMounted(() => {
   // getWhitePaper()
 })
-console.log(userInfo)
+// console.log(userInfo)
 /**
  * 获取白皮书URL
  */

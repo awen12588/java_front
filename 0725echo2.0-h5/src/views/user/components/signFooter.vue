@@ -177,7 +177,7 @@ const loginSubmit = (params) => {
       console.log(err)
     })
 }
-console.log(__config)
+// console.log(__config)
 /**
  * 注册
  */
