@@ -66,7 +66,22 @@ export const sendBousApi = (data) => {
     data: data,
   });
 };
-
+// 冻结金额
+export const freezeMoneyApi = (data) => {
+  return request({
+    url: "/bussiness/user/freezeMoney",
+    method: "post",
+    data: data,
+  });
+};
+// 调节金额
+export const adjustMoneyApi = (data) => {
+  return request({
+    url: "/bussiness/user/adjustMoney",
+    method: "post",
+    data: data,
+  });
+};
 // 包赢包输
 export const changeWin = (data) => {
   return request({

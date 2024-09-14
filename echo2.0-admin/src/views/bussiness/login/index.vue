@@ -83,7 +83,12 @@
         <el-table-column label="访问位置" align="center" prop="loginLocation" />
         <el-table-column label="浏览器" align="center" prop="browser" />
         <el-table-column label="系统OS" align="center" prop="os" />
-        <el-table-column label="登录状态" align="center" prop="status" />
+        <el-table-column label="登录状态" align="center">
+          <template slot-scope="scope">
+            <span v-if="scope.row.type === 0">登出</span>
+            <span v-else-if="scope.row.type === 1">登录</span>
+          </template>
+        </el-table-column>
         <el-table-column
           label="登录时间"
           sortable
@@ -144,6 +149,7 @@ export default {
         browser: null,
         os: null,
         status: null,
+        type: null,
         msg: null,
         loginTime: null,
       },
@@ -203,6 +209,7 @@ export default {
         browser: null,
         os: null,
         status: null,
+        type: null,
         msg: null,
         loginTime: null,
       };

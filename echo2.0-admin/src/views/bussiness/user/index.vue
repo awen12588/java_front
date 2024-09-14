@@ -287,14 +287,14 @@
           label="登录IP"
           min-width="130"
           align="center"
-          prop="loginIp"
+          prop="lastLoginIp"
           v-if="columns[9].visible"
         />
         <el-table-column
           label="登录时间"
-          min-width="130"
+          min-width="180"
           align="center"
-          prop="loginTime"
+          prop="lastLoginTime"
           v-if="columns[10].visible"
         />
         <el-table-column
@@ -330,7 +330,7 @@
           <template slot-scope="scope">
             <div class="btns">
               <el-button
-                v-if="['rxce', 'dev'].includes(VUE_APP_ENV)"
+                v-if="['rxce'].includes(VUE_APP_ENV)"
                 size="mini"
                 plain
                 type="danger"
@@ -341,18 +341,19 @@
               <el-button
                 size="mini"
                 plain
-                type="info"
+                type="success"
                 @click="getDetail(scope.row)"
-                >详情</el-button
+                >资产详情</el-button
               >
-              <el-button
+              <!-- <el-button
+                v-if="false"
                 size="mini"
                 plain
                 type="primary"
                 @click="winorLose(scope.row)"
                 v-hasPermi="['bussiness:user:buff']"
                 >输赢</el-button
-              >
+              > -->
               <el-button
                 size="mini"
                 plain
@@ -360,6 +361,14 @@
                 @click="handleUpdate(scope.row)"
                 v-hasPermi="['bussiness:user:edit']"
                 >修改</el-button
+              >
+              <!-- <el-button
+                size="mini"
+                plain
+                type="success"
+                v-hasPermi="['bussiness:user:freezeMoney']"
+                @click="openDialogKey('showFreezeDialog', scope.row)"
+                >冻结</el-button
               >
               <el-button
                 size="mini"
@@ -376,7 +385,7 @@
                 v-hasPermi="['bussiness:user:subAmount']"
                 @click="openDialogKey('showDMoneyDialog', scope.row)"
                 >人工上下分</el-button
-              >
+              > -->
               <el-button
                 size="mini"
                 plain
@@ -393,7 +402,8 @@
                 @click="recharge(scope.row)"
                 >充值地址配置</el-button
               >
-              <el-button
+              <!-- <el-button
+                v-if="false"
                 size="mini"
                 plain
                 type="success"
@@ -402,13 +412,14 @@
                 >修改上级代理</el-button
               >
               <el-button
+                v-if="false"
                 size="mini"
                 plain
                 type="danger"
                 @click="handleDelete(scope.row)"
                 v-hasPermi="['bussiness:user:remove']"
                 >删除</el-button
-              >
+              > -->
             </div>
           </template>
         </el-table-column>
@@ -425,12 +436,15 @@
     <!-- 添加或修改玩家用户对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-        <el-form-item label="所属代理" prop="adminParentIds">
-          <el-input
-            disabled
-            v-model="form.adminParentIds"
-            placeholder="请输入后台代理ID"
-          />
+        <el-form-item label="所属代理" prop="adminParentNames">
+          <el-select v-model="form.adminParentNames">
+            <el-option
+              v-for="dict in AgentInfoList"
+              :key="dict.value"
+              :label="dict.nickName"
+              :value="dict.userId"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="用户ID" prop="userId">
           <el-input disabled v-model="form.userId" />
@@ -638,7 +652,7 @@
     >
       <div class="content-b">
         <div class="c">
-          <div class="left">
+          <!-- <div class="left">
             <div
               v-for="(item, index) in leftList"
               :class="[item.id == currentTab.id ? 'active' : '']"
@@ -647,7 +661,7 @@
             >
               {{ item.tittle }}
             </div>
-          </div>
+          </div> -->
           <div class="right">
             <!-- <li>IP所属地: {{ userDetail. }}</li> -->
             <div class="content1" v-if="currentTab.id == 0">
@@ -657,9 +671,9 @@
                 <li>登录名：{{ userDetail.loginName }}</li>
                 <li>邮箱：{{ userDetail.email }}</li>
                 <li>注册IP：{{ userDetail.registerIp }}</li>
-                <!-- <li>地址类型：{{ userDetail.walletType }}</li> -->
+                <li>地址类型：{{ userDetail.walletType }}</li>
                 <li>注册域名：{{ userDetail.host }}</li>
-                <!-- <li>上级ID：{{ userDetail.appParentIds }}</li> -->
+                <li>上级ID：{{ userDetail.appParentIds }}</li>
                 <li>
                   用户类型：{{
                     userDetail.isTest == 0 ? "正常用户" : "测试用户"
@@ -670,7 +684,7 @@
                 <li>地址：{{ userDetail.address }}</li>
               </ul>
             </div>
-            <div class="content2" v-if="currentTab.id == 1">
+            <div class="content2" v-if="currentTab.id == 1" style="width: 100%;">
               <SearchFormBox>
                 <el-select
                   v-model="symbol"
@@ -703,7 +717,9 @@
                   @click="resetAsset"
                   >重置</el-button
                 >
+
               </SearchFormBox>
+
               <el-tabs v-model="navIndex" @tab-click="handleClick">
                 <el-tab-pane
                   :label="item.type"
@@ -713,39 +729,111 @@
                 ></el-tab-pane>
               </el-tabs>
               <el-table
+                v-if="navIndex=='1'"
                 border
                 v-loading="loading"
                 :data="assetList"
-                @selection-change="handleSelectionChange"
               >
                 <el-table-column label="资产" align="center" prop="symbol" />
+
                 <el-table-column
-                  label="资产总额"
+                  label="余额"
                   width="150"
-                  height="36"
                   align="center"
-                  prop="amount"
+                  prop="availableAmount"
                 />
                 <el-table-column
-                  label="占用金额"
+                  label="锁定金额"
                   width="150"
                   align="center"
                   prop="occupiedAmount"
                 />
                 <el-table-column
-                  v-if="navIndex==3"
+                  label="操作"
+                  width="250"
+                  align="center"
+                  key="operation"
+                >
+                  <template slot-scope="scope">
+                    <el-button
+                      size="small"
+                      type="success"
+                      plain
+                      v-hasPermi="['bussiness:user:adjustMoney']"
+                      @click="openDialogKey('showAdjustDialog', scope.row)"
+                    >调节额度</el-button>
+                    <el-button
+                      size="small"
+                      plain
+                      type="warning"
+                      v-hasPermi="['bussiness:user:freezeMoney']"
+                      @click="openDialogKey('showFreezeDialog', scope.row)"
+                      >冻结</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+
+              <el-table
+                v-if="navIndex=='3'"
+                border
+                v-loading="loading"
+                :data="assetList"
+              >
+                <el-table-column label="资产" align="center" prop="symbol" />
+                <!-- <el-table-column
+                  label="资产总额"
+                  width="150"
+                  height="36"
+                  align="center"
+                  prop="amount"
+                  key="amount"
+                ></el-table-column> -->
+                <el-table-column
+                  label="锁定金额"
+                  width="150"
+                  align="center"
+                  prop="occupiedAmount"
+                  key="occupiedAmount"
+                ></el-table-column>
+                <el-table-column
                   label="体验金"
                   width="100"
                   align="center"
                   prop="trailAmount"
-                />
+                  key="trailAmount"
+                ></el-table-column>
                 <el-table-column
                   label="可用金额"
                   width="150"
                   align="center"
                   prop="availableAmount"
-                />
+                  key="availableAmount"
+                ></el-table-column>
+                <el-table-column
+                  label="操作"
+                  width="250"
+                  align="center"
+                  key="operation"
+                >
+                  <template slot-scope="scope">
+                    <el-button
+                      size="small"
+                      type="success"
+                      plain
+                      v-hasPermi="['bussiness:user:adjustMoney']"
+                      @click="openDialogKey('showAdjustDialog', scope.row)"
+                    >调节额度</el-button>
+                    <el-button
+                      size="small"
+                      plain
+                      type="warning"
+                      v-hasPermi="['bussiness:user:freezeMoney']"
+                      @click="openDialogKey('showFreezeDialog', scope.row)"
+                      >冻结</el-button>
+                  </template>
+                </el-table-column>
               </el-table>
+
             </div>
           </div>
         </div>
@@ -784,11 +872,21 @@
       :user="currentUser"
       @getDataList="getDataList"
     ></DMoney>
+    <Freeze
+      v-model="showFreezeDialog"
+      :user="currentUser"
+      @getDataList="getDataList"
+    ></Freeze>
     <Winnings
       v-model="showWinningsDialog"
       :user="currentUser"
       @getDataList="getDataList"
     ></Winnings>
+    <Adjust
+      v-model="showAdjustDialog"
+      :user="currentUser"
+      @getDataList="getDataList"
+    ></Adjust>
     <WLControl v-model="showWLControlDialog" :user="currentUser"></WLControl>
     <RPwd v-model="showPwdDialog" :user="currentUser"> </RPwd>
   </div>
@@ -806,6 +904,8 @@ import {
 import { listAsset } from "@/api/bussiness/asset";
 import { getAdminUserList, updateUserAppIds } from "@/api/system/user";
 import DMoney from "./components/DMoney.vue";
+import Freeze from "./components/Freeze.vue";
+import Adjust from "./components/Adjust.vue";
 import Winnings from "./components/Winnings.vue";
 import WLControl from "./components/WLControl.vue";
 import RPwd from "./components/RPwd";
@@ -814,6 +914,8 @@ export default {
   name: "User",
   components: {
     DMoney,
+    Freeze,
+    Adjust,
     Winnings,
     WLControl,
     RPwd,
@@ -830,7 +932,7 @@ export default {
       agencyOpen: false,
       order: "desc",
       // 当前选中
-      navIndex: "",
+      navIndex: '1',
       /**资产类型 */
       actionList: [
         {
@@ -849,6 +951,7 @@ export default {
       /**玩家资产 */
       symbol: "",
       userId: "",
+      userName: "",
       /**用户信息 */
       detailTitle: "",
       userDetail: {},
@@ -864,6 +967,10 @@ export default {
       showDMoneyDialog: false,
       // 彩金
       showWinningsDialog: false,
+      // 冻结
+      showFreezeDialog: false,
+      // 调节
+      showAdjustDialog: false,
       // 控制输赢
       showWLControlDialog: false,
       // 重置密码
@@ -1102,9 +1209,10 @@ export default {
     /**玩家用户详情 */
     getDetail(row) {
       this.detailLog = true;
-      this.detailTitle = "用户信息";
+      this.detailTitle = "资产详情";
       this.userId = row.userId;
-      this.lookFor(this.leftList[0]);
+      this.userName = row.loginName;
+      this.lookFor(this.leftList[1]);
     },
     lookFor(item) {
       this.currentTab = item;
@@ -1230,6 +1338,7 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
+      this.getAgencyList();
       const userId = row.userId || this.ids;
       getUser(userId).then((response) => {
         this.form = response.data.user;
@@ -1253,6 +1362,7 @@ export default {
       this.$refs["form"].validate((valid) => {
         if (valid) {
           if (this.form.userId != null) {
+            this.form.adminParentNames = isNaN(Number(this.form.adminParentNames)) ? '' : this.form.adminParentNames
             updateUser(this.form).then((response) => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;

@@ -42,10 +42,10 @@
         <div class="fw-num numItem">{{ recordListItem.remainMargin }} USDT</div>
       </div>
       <!-- 担保资产率 -->
-      <div class="item">
+      <!-- <div class="item">
         <div>{{ _t18(`guaranteed_asset_ratio`) }}</div>
         <div class="fw-num numItem">{{ guaranteePrice }}%</div>
-      </div>
+      </div> -->
       <!-- 开仓均价 -->
       <div class="item">
         <div>{{ _t18(`average_opening_price`) }}</div>
