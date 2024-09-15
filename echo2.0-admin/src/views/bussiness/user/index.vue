@@ -729,86 +729,25 @@
                 ></el-tab-pane>
               </el-tabs>
               <el-table
-                v-if="navIndex=='1'"
                 border
                 v-loading="loading"
                 :data="assetList"
+                @refreshAsset="resetAsset"
               >
                 <el-table-column label="资产" align="center" prop="symbol" />
 
-                <el-table-column
-                  label="余额"
-                  width="150"
-                  align="center"
-                  prop="availableAmount"
-                />
-                <el-table-column
-                  label="锁定金额"
-                  width="150"
-                  align="center"
-                  prop="occupiedAmount"
-                />
-                <el-table-column
-                  label="操作"
-                  width="250"
-                  align="center"
-                  key="operation"
-                >
-                  <template slot-scope="scope">
-                    <el-button
-                      size="small"
-                      type="success"
-                      plain
-                      v-hasPermi="['bussiness:user:adjustMoney']"
-                      @click="openDialogKey('showAdjustDialog', scope.row)"
-                    >调节额度</el-button>
-                    <el-button
-                      size="small"
-                      plain
-                      type="warning"
-                      v-hasPermi="['bussiness:user:freezeMoney']"
-                      @click="openDialogKey('showFreezeDialog', scope.row)"
-                      >冻结</el-button>
-                  </template>
-                </el-table-column>
-              </el-table>
-
-              <el-table
-                v-if="navIndex=='3'"
-                border
-                v-loading="loading"
-                :data="assetList"
-              >
-                <el-table-column label="资产" align="center" prop="symbol" />
-                <!-- <el-table-column
-                  label="资产总额"
-                  width="150"
-                  height="36"
-                  align="center"
-                  prop="amount"
-                  key="amount"
-                ></el-table-column> -->
-                <el-table-column
-                  label="锁定金额"
-                  width="150"
-                  align="center"
-                  prop="occupiedAmount"
-                  key="occupiedAmount"
-                ></el-table-column>
-                <el-table-column
-                  label="体验金"
-                  width="100"
-                  align="center"
-                  prop="trailAmount"
-                  key="trailAmount"
-                ></el-table-column>
                 <el-table-column
                   label="可用金额"
                   width="150"
                   align="center"
                   prop="availableAmount"
-                  key="availableAmount"
-                ></el-table-column>
+                />
+                <el-table-column
+                  label="锁定金额"
+                  width="150"
+                  align="center"
+                  prop="occupiedAmount"
+                />
                 <el-table-column
                   label="操作"
                   width="250"
@@ -833,7 +772,6 @@
                   </template>
                 </el-table-column>
               </el-table>
-
             </div>
           </div>
         </div>
@@ -876,6 +814,7 @@
       v-model="showFreezeDialog"
       :user="currentUser"
       @getDataList="getDataList"
+      @refreshAsset="resetAsset"
     ></Freeze>
     <Winnings
       v-model="showWinningsDialog"
@@ -885,7 +824,7 @@
     <Adjust
       v-model="showAdjustDialog"
       :user="currentUser"
-      @getDataList="getDataList"
+      @refreshAsset="resetAsset"
     ></Adjust>
     <WLControl v-model="showWLControlDialog" :user="currentUser"></WLControl>
     <RPwd v-model="showPwdDialog" :user="currentUser"> </RPwd>

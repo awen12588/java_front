@@ -168,7 +168,7 @@ export default {
               } else {
                 this.$modal.msgError(res.msg);
               }
-              this.getAssetList();
+              this.$emit('refreshAsset'); // 触发事件
             })
             .finally(() => {
               this.getAssetList();

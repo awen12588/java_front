@@ -133,7 +133,6 @@ export default {
       if (this.user?.userId) {
         this.reset();
         // this.form.type = this.dict.type.t_asset_type[0]?.value;
-
         this.form.userId = this.user.userId;
         this.form.giveType = 1;
         this.form.isHidden = 0;
@@ -176,7 +175,8 @@ export default {
               } else {
                 this.$modal.msgError(res.msg);
               }
-              this.getAssetList();
+              this.$emit('refreshAsset'); // 触发事件
+              // this.getAssetList();
             })
             .finally(() => {
               this.getAssetList();

@@ -230,7 +230,7 @@ const availableBalance = computed(() => {
       tempValue = asset.value.filter((item) => item.symbol === 'USDT')[0]?.availableAmount || 0
     } else {
       tempValue =
-        asset.value.filter((item) => item.symbol === props.coinInfo.coin)[0]?.availableAmount || 0
+        asset.value.filter((item) => item.symbol === props.coinInfo.coinUpperCase)[0]?.availableAmount || 0
     }
   }
   return tempValue
