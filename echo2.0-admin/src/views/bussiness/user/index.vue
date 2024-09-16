@@ -690,6 +690,7 @@
                   v-model="symbol"
                   placeholder="请选择币种"
                   clearable
+                  filterable
                   style="width: 250px; margin-right: 15px"
                 >
                   <el-option
