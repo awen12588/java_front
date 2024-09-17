@@ -35,19 +35,39 @@ const props = defineProps({
 /**
  * 分辨率(k线图右侧刻度)
  */
+// const priceScale = computed(() => {
+//   let tempPricescale = 10000
+//   if (props.coinInfo?.amount >= 100) {
+//     tempPricescale = 100
+//   }  else if (props.coinInfo?.amount < 100 && props.coinInfo?.amount >= 1) {
+//     tempPricescale = 10000
+//   }  else if (props.coinInfo?.amount < 1 && props.coinInfo?.amount > 0.1) {
+//     tempPricescale = 1000000
+//   }  else if (props.coinInfo?.amount < 0.1) {
+//     tempPricescale = 100000000
+//   }
+//   return tempPricescale
+// })
 const priceScale = computed(() => {
-  let tempPricescale = 10000
-  if (props.coinInfo?.amount >= 100) {
-    tempPricescale = 100
-  }  else if (props.coinInfo?.amount < 100 && props.coinInfo?.amount >= 1) {
-    tempPricescale = 10000
-  }  else if (props.coinInfo?.amount < 1 && props.coinInfo?.amount > 0.1) {
-    tempPricescale = 1000000
-  }  else if (props.coinInfo?.amount < 0.1) {
-    tempPricescale = 100000000
+  let tempPricescale = 10000;
+  if (props.coinInfo?.amount >= 1000) {
+    tempPricescale = 10;
+  } else if (props.coinInfo?.amount >= 100) {
+    tempPricescale = 100;
+  } else if (props.coinInfo?.amount >= 10) {
+    tempPricescale = 1000;
+  } else if (props.coinInfo?.amount >= 1) {
+    tempPricescale = 10000;
+  } else if (props.coinInfo?.amount >= 0.1) {
+    tempPricescale = 1000000;
+  } else if (props.coinInfo?.amount >= 0.001) {
+    tempPricescale = 100000000;
+  } else {
+    tempPricescale = 1000000000; // 处理小于0.001的情况
   }
-  return tempPricescale
-})
+  return tempPricescale;
+});
+
 /**
  * 临时交易(打开页面币种初始信息)
  */
