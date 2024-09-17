@@ -157,69 +157,71 @@ const manual = computed(() => {
 })
 </script>
 <template>
-  <!-- 质押挖矿规则弹窗 -->
-  <Popup
-    :show="showRule"
-    :direction="direction"
-    @handelClose="closePopup"
-    :title="txt"
-    :content="popupContent"
-  >
-  </Popup>
-  <HeaderBar
-    :currentName="_t18('defi_host_lockup')"
-    :cuttentRight="cuttentRight"
-    @showPopup="showPopup"
-  ></HeaderBar>
-  <!-- 广告图 -->
-  <div class="banner">
-    <image-load filePath="zhiyabg.png" name="defi"></image-load>
-  </div>
-  <!-- 收益信息（资金、收益） -->
-  <div class="userAccount">
-    <div class="title">
-      <image-load filePath="usdt.png" name="usdt" class="usdt"></image-load>
-      <p class="fw-num">USDT</p>
+  <div>
+    <!-- 质押挖矿规则弹窗 -->
+    <Popup
+      :show="showRule"
+      :direction="direction"
+      @handelClose="closePopup"
+      :title="txt"
+      :content="popupContent"
+    >
+    </Popup>
+    <HeaderBar
+      :currentName="_t18('defi_host_lockup')"
+      :cuttentRight="cuttentRight"
+      @showPopup="showPopup"
+    ></HeaderBar>
+    <!-- 广告图 -->
+    <div class="banner">
+      <image-load filePath="zhiyabg.png" name="defi"></image-load>
     </div>
-    <div class="fund">
-      <image-load filePath="zhiyaimg.png" name="zhiyaimg" class="zhiyaimg"></image-load>
-      <div class="top">
-        <div class="left">
-          <p class="fw-num">{{ priceFormat(showInfo.amount) || 0 }}</p>
-          <!-- 正在托管 -->
-          <span>{{ _t18('pledge_hosting') }}</span>
+    <!-- 收益信息（资金、收益） -->
+    <div class="userAccount">
+      <div class="title">
+        <image-load filePath="usdt.png" name="usdt" class="usdt"></image-load>
+        <p class="fw-num">USDT</p>
+      </div>
+      <div class="fund">
+        <image-load filePath="zhiyaimg.png" name="zhiyaimg" class="zhiyaimg"></image-load>
+        <div class="top">
+          <div class="left">
+            <p class="fw-num">{{ priceFormat(showInfo.amount) || 0 }}</p>
+            <!-- 正在托管 -->
+            <span>{{ _t18('pledge_hosting') }}</span>
+          </div>
+          <div class="right">
+            <p class="fw-num">{{ showInfo.orderNum || 0 }}</p>
+            <!-- 委托订单 -->
+            <span>{{ _t18('pledge_commissioned_order') }}</span>
+          </div>
         </div>
-        <div class="right">
-          <p class="fw-num">{{ showInfo.orderNum || 0 }}</p>
-          <!-- 委托订单 -->
-          <span>{{ _t18('pledge_commissioned_order') }}</span>
+        <div class="bottom">
+          <div class="left">
+            <p class="fw-num">{{ priceFormat(showInfo.todayProfit) || 0 }}</p>
+            <!-- 今日收益 -->
+            <span>{{ _t18('pledge_Today_Earnings') }}</span>
+          </div>
+          <div class="right">
+            <p class="fw-num">{{ priceFormat(showInfo.profitMoney) || 0 }}</p>
+            <!-- 累计收益 -->
+            <span>{{ _t18('Cumulative_income') }}</span>
+          </div>
         </div>
       </div>
-      <div class="bottom">
-        <div class="left">
-          <p class="fw-num">{{ priceFormat(showInfo.todayProfit) || 0 }}</p>
-          <!-- 今日收益 -->
-          <span>{{ _t18('pledge_Today_Earnings') }}</span>
-        </div>
-        <div class="right">
-          <p class="fw-num">{{ priceFormat(showInfo.profitMoney) || 0 }}</p>
-          <!-- 累计收益 -->
-          <span>{{ _t18('Cumulative_income') }}</span>
-        </div>
+    </div>
+    <!-- 项目信息 -->
+    <div class="project">
+      <div class="projectList" v-if="projectList?.length > 0">
+        <Card
+          v-for="(item, index) in projectList"
+          @click="toView(item)"
+          :key="index"
+          :cardData="item"
+        ></Card>
       </div>
+      <Nodata v-else></Nodata>
     </div>
-  </div>
-  <!-- 项目信息 -->
-  <div class="project">
-    <div class="projectList" v-if="projectList?.length > 0">
-      <Card
-        v-for="(item, index) in projectList"
-        @click="toView(item)"
-        :key="index"
-        :cardData="item"
-      ></Card>
-    </div>
-    <Nodata v-else></Nodata>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -305,6 +307,5 @@ const manual = computed(() => {
 }
 .project {
   padding: 0 15px 50px;
-  
 }
 </style>

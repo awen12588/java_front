@@ -24,7 +24,8 @@ export default ({ mode }) =>
     publicDir: 'public',
     base: '',
     // 控制台输出的级别 info、warn、error、silent
-    clearScreen: true,
+    // clearScreen: true,
+    clearScreen: false,  // 设置为 false，以防止在每次重新启动时清除控制台
     // optimizeDeps: {
     //   exclude: ['buffer'] // 将 'buffer' 模块排除在外部化之外
     // },
@@ -70,7 +71,8 @@ export default ({ mode }) =>
       // 当端口被占用时是否直接退出，设置为 true 则直接退出
       strictPort: false,
       // 热更新功能
-      hmr: true
+      hmr: true,
+      logLevel: 'warn'  // 设置为 'error'、'warn' 或 'info'，以减少输出的信息量
     },
     css: {
       // PostCSS 配置
