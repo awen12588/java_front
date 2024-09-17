@@ -1,4 +1,56 @@
 <!-- 质押挖矿 -->
+<template>
+  <div>
+    <!-- 质押挖矿规则弹窗 -->
+    <Popup
+      :show="showRule"
+      :direction="direction"
+      @handelClose="closePopup"
+      :title="txt"
+      :content="manual"
+    >
+    </Popup>
+    <HeaderBar
+      :currentName="`质押挖矿`"
+      :cuttentRight="cuttentRight"
+      @showPopup="showPopup"
+    ></HeaderBar>
+    <!-- 收益信息（资金、收益） -->
+    <div class="userAccount">
+      <div class="fund">
+        <div class="title">正在托管的资金<span>(USDT)</span></div>
+        <div class="amount fw-num">{{ priceFormat(27326) }}</div>
+      </div>
+      <div class="profit">
+        <div>
+          <p class="profit_til">今日收益</p>
+          <p class="profit_txt ff-num">{{ priceFormat(27326) }}</p>
+        </div>
+        <div>
+          <p class="profit_til">累计收益</p>
+          <p class="profit_txt ff-num">{{ priceFormat(27326) }}</p>
+        </div>
+        <div>
+          <p class="profit_til">委托订单</p>
+          <p class="profit_txt ff-num">{{ priceFormat(27326) }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- 项目信息 -->
+    <div class="project">
+      <div class="projectList" v-if="projectList?.length > 0">
+        <Card
+          v-for="(item, index) in projectList"
+          @click="toView(item)"
+          :key="index"
+          :cardData="item"
+        ></Card>
+      </div>
+      <Nodata v-else></Nodata>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { priceFormat } from '@/utils/decimal.js'
 import { useRouter } from 'vue-router'
@@ -122,55 +174,7 @@ const manual = computed(() => {
   return list
 })
 </script>
-<template>
-  <!-- 质押挖矿规则弹窗 -->
-  <Popup
-    :show="showRule"
-    :direction="direction"
-    @handelClose="closePopup"
-    :title="txt"
-    :content="manual"
-  >
-  </Popup>
-  <HeaderBar
-    :currentName="`质押挖矿`"
-    :cuttentRight="cuttentRight"
-    @showPopup="showPopup"
-  ></HeaderBar>
-  <!-- 收益信息（资金、收益） -->
-  <div class="userAccount">
-    <div class="fund">
-      <div class="title">正在托管的资金<span>(USDT)</span></div>
-      <div class="amount fw-num">{{ priceFormat(27326) }}</div>
-    </div>
-    <div class="profit">
-      <div>
-        <p class="profit_til">今日收益</p>
-        <p class="profit_txt ff-num">{{ priceFormat(27326) }}</p>
-      </div>
-      <div>
-        <p class="profit_til">累计收益</p>
-        <p class="profit_txt ff-num">{{ priceFormat(27326) }}</p>
-      </div>
-      <div>
-        <p class="profit_til">委托订单</p>
-        <p class="profit_txt ff-num">{{ priceFormat(27326) }}</p>
-      </div>
-    </div>
-  </div>
-  <!-- 项目信息 -->
-  <div class="project">
-    <div class="projectList" v-if="projectList?.length > 0">
-      <Card
-        v-for="(item, index) in projectList"
-        @click="toView(item)"
-        :key="index"
-        :cardData="item"
-      ></Card>
-    </div>
-    <Nodata v-else></Nodata>
-  </div>
-</template>
+
 <style lang="scss" scoped>
 .userAccount {
   font-size: 14px;

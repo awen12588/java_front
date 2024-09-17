@@ -1,18 +1,18 @@
 <template>
   <div>
-    <template v-for="(item, index) in options">
+    <div v-for="(item, index) in options" :key="index">
       <template v-if="values.includes(item.value)">
         <span
           v-if="item.raw.listClass == 'default' || item.raw.listClass == ''"
           :key="item.value"
           :index="index"
           :class="item.raw.cssClass"
-          >{{ item.label + " " }}</span
         >
+          {{ item.label + " " }}
+        </span>
         <el-tag
           v-else
           :disable-transitions="true"
-          :key="item.value"
           :index="index"
           :type="item.raw.listClass == 'primary' ? '' : item.raw.listClass"
           :class="item.raw.cssClass"
@@ -20,7 +20,7 @@
           {{ item.label + " " }}
         </el-tag>
       </template>
-    </template>
+    </div>
     <template v-if="unmatch && showValue">
       {{ unmatchArray | handleArray }}
     </template>
@@ -35,17 +35,20 @@ export default {
       type: Array,
       default: null,
     },
-    value: [Number, String, Array],
+    value: {
+      type: [Number, String, Array],
+      default: "",
+    },
     // 当未找到匹配的数据时，显示value
     showValue: {
       type: Boolean,
       default: true,
-    }
+    },
   },
   data() {
     return {
       unmatchArray: [], // 记录未匹配的项
-    }
+    };
   },
   computed: {
     values() {
@@ -57,6 +60,7 @@ export default {
     },
     unmatch() {
       this.unmatchArray = [];
+
       if (this.value !== null && typeof this.value !== "undefined") {
         // 传入值为非数组
         if (!Array.isArray(this.value)) {
@@ -80,9 +84,9 @@ export default {
       if (array.length === 0) return "";
       return array.reduce((pre, cur) => {
         return pre + " " + cur;
-      })
-    }
-  }
+      });
+    },
+  },
 };
 </script>
 <style scoped>
