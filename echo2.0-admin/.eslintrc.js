@@ -163,10 +163,14 @@ module.exports = {
       }
     }],
     'padded-blocks': [2, 'never'],
-    'quotes': [2, '', {
+    'quotes': [2, 'consistent', {
       'avoidEscape': true,
       'allowTemplateLiterals': true
     }],
+    // 'quotes': [2, 'double', {
+    //   'avoidEscape': true,
+    //   'allowTemplateLiterals': true
+    // }],
     // 'quotes': [2, 'single', {
     //   'avoidEscape': true,
     //   'allowTemplateLiterals': true
